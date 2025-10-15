@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изменяем кириллицу на латиницу по клику</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav id="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Логотип" width="50">
+                    <span>Правовая защита</span>
+                </a>
+            </div>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="lawyers.html">Наши юристы</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li><a href="dom-js.html">DOM_JS</a></li>
+                <li class="current"><a href="transliterate.html">Кириллица/Латиница</a></li>
+                <li><a href="algorithm.html">Алгоритмическая задача</a></li>
+                <li><a href="https://sudrf.ru" target="_blank">Суды РФ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Изменяем кириллицу на латиницу по клику</h1>
+        
+        <div id="passport-data">
+            <h2>Паспортные данные</h2>
+            <div class="passport-info">
+                <p><strong>Фамилия:</strong> <span id="surname-field">Иванов</span></p>
+                <p><strong>Имя:</strong> <span id="name-field">Петр</span></p>
+                <p><strong>Год рождения:</strong> <span id="birth-year-field">1985</span></p>
+                <p><strong>Место рождения:</strong> <span id="birth-place-field">г. Москва</span></p>
+                <p><strong>Дата выдачи:</strong> <span id="issue-date-field">15.03.2015</span></p>
+                <p><strong>Кем выдан:</strong> <span id="authority-field">ОУФМС России по г. Москве</span></p>
+            </div>
+            
+            <button onclick="transliterateToLatin()" class="btn">Перевести на латиницу</button>
+            <button onclick="restoreToCyrillic()" class="btn">Вернуть кириллицу</button>
+        </div>
+        
+        <script>
+            const originalData = {
+                surname: "Иванов",
+                name: "Петр", 
+                birthYear: "1985",
+                birthPlace: "г. Москва",
+                issueDate: "15.03.2015",
+                authority: "ОУФМС России по г. Москве"
+            };
+            
+            const transliterationMap = {
+                'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D',
+                'Е': 'E', 'Ё': 'Yo', 'Ж': 'Zh', 'З': 'Z', 'И': 'I',
+                'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N',
+                'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T',
+                'У': 'U', 'Ф': 'F', 'Х': 'Kh', 'Ц': 'Ts', 'Ч': 'Ch',
+                'Ш': 'Sh', 'Щ': 'Shch', 'Ъ': '', 'Ы': 'Y', 'Ь': '',
+                'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya',
+                'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
+                'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i',
+                'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+                'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't',
+                'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch',
+                'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '',
+                'э': 'e', 'ю': 'yu', 'я': 'ya'
+            };
+            
+            function transliterateToLatin() {
+                document.getElementById('surname-field').textContent = 
+                    transliterateText(originalData.surname);
+                document.getElementById('name-field').textContent = 
+                    transliterateText(originalData.name);
+                document.getElementById('birth-place-field').textContent = 
+                    transliterateText(originalData.birthPlace);
+                document.getElementById('authority-field').textContent = 
+                    transliterateText(originalData.authority);
+            }
+            
+            function restoreToCyrillic() {
+                document.getElementById('surname-field').textContent = originalData.surname;
+                document.getElementById('name-field').textContent = originalData.name;
+                document.getElementById('birth-place-field').textContent = originalData.birthPlace;
+                document.getElementById('authority-field').textContent = originalData.authority;
+            }
+            
+            function transliterateText(text) {
+                return text.split('').map(char => {
+                    return transliterationMap[char] || char;
+                }).join('');
+            }
+        </script>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Юридическая компания "Правовая защита". Все права защищены.</p>
+    </footer>
+</body>
+</html>
